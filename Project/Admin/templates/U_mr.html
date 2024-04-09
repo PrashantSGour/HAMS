@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar"  style='bottom-margin:-50px'>
+        <div id='side_content'>
+          <h2><b>Admin</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url "admin_dashboard" %}">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RD" %}">
+                  Register Doctors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RS" %}">
+                  Register Staff
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RMR" %}">
+                  Register MR
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "MRlist" %}">
+                  Medical Records
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "Flist" %}">
+                  Feedback
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content">
+
+    <div class="container p-md-5">
+      <div class="row justify-content-center">
+        
+        <div class="col-md-6">
+          
+          <form class="transparent-form" method='post' action="{% url "MRupdate" data.Mid  %}" data-aos="fade-up" data-aos-delay="100">
+            {% csrf_token %}
+          {% if messages %}
+          <div class="alert alert-info">
+              <ul>
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+            <b><h2 class="text-center">Edit  - Medical Record</h2></b>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="pname">Patient Name:</label>
+                  <input name="pname" type="text" id="pname" placeholder="Full Name" class="form-control" value="{{ data.Patientname }}" autofocus>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class= "form-group">
+                  <label for="email">Patient Email:</label>
+                    <select id="email" name="email" >
+                    <option value="{{data.Pemail.Pemail}}">{{data.Pemail.Pemail}}</option>
+                    {% for P in Pat %}
+                    <option value="{{ P.Pemail }}">{{ P.Pemail }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">    
+                    <label for="dep">Department</label>
+                    <select id="dep" name="dep">
+                        <option value="{{data.Demail.Dpid.Dpname}}">{{data.Demail.Dpid.Dpname}}</option>
+                        {% for department in Dep %}
+                        <option value="{{ department.Dpname }}">{{ department.Dpname }}</option>
+                        {% endfor %}
+                    </select> 
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="dname">Doctor:</label>
+                        <select id="dname" name="dname">
+                            <option value="{{ data.Demail.Demail }}">{{ data.Demail.Demail }}</option>
+                            {% for doctor in Doc %}
+                            <option value="{{ doctor.Demail }}">{{ doctor.Demail }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="date">Date of Record:</label>
+                  <input name="date" value="{{ formatted_date }}" type="date" id="date" class="form-control">
+                </div>
+              </div> 
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="time">Time of Record:</label>
+                  <input name="time" value="{{ formatted_time }}" type="time" id="time" placeholder="Time" class="form-control" >
+                </div>
+              </div>    
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="diagnosis">Diagnosis:</label>
+                      <input name="diagnosis" value="{{ data.Diagnosis }}" type="text" id="diagnosis" placeholder="Diagnosis" class="form-control" >
+                    </div>
+                </div>    
+            </div>
+            <br>
+            <div class="text-center"><button type="submit">Submit</button></div>
+          
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock AdminContent %}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <form id="registrationForm" class="form-horizontal" role="form" method="post" action="{% url 'test' %}">
+        {% csrf_token %}
+        <h2>Registration</h2>
+        
+        <div class="form-group">
+            <label for="Fname" class="col-sm-3 control-label">Full Name</label>
+            <div class="col-sm-9">
+                <input name="Fname" type="text" id="Fname" placeholder="Full Name" class="form-control" autofocus>
+                
+                <span class="error" id="nameError">{{ errors.nameError }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address" class="col-sm-3 control-label">Addreess</label>
+            <div class="col-sm-9">
+                <input name="address" type="text" id="address" placeholder="Address" class="form-control" autofocus>
+                <span class="error" id="addressError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">Email* </label>
+            <div class="col-sm-9">
+                <input name="email" type="email" id="email" placeholder="Email" class="form-control" name="email">
+                <span class="error" id="emailError">{{ errors.emailError }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-3 control-label">Password*</label>
+            <div class="col-sm-9">
+                <input name="password" type="password" id="password" placeholder="Password" class="form-control">
+                <span class="error" id="passwordError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword" class="col-sm-3 control-label">Confirm Password*</label>
+            <div class="col-sm-9">
+                <input name="cpassword" type="password" id="confirmPassword" placeholder="Confirm Password" class="form-control">
+                <span class="error" id="cpasswordError">{{ errors.cpasswordError }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
+            <div class="col-sm-9">
+                <input name="dob" type="date" id="birthDate" class="form-control">
+                <span class="error" id="dobError">{{ errors.dobError }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-3 control-label">Phone number </label>
+            <div class="col-sm-9">
+                <input name="phone" type="tel" id="phone" placeholder="Phone number" class="form-control">
+                <span class="error" id="phoneError">{{ errors.phoneError }}</span>
+                
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label class="control-label col-sm-3">Gender</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" id="femaleRadio" value="Female" name="gender">F
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" id="maleRadio" value="Male" name="gender">M
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <span class="help-block">*Required fields</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </div>
+    </form>
+    
+    
+    <script>
+        $(document).ready(function () {
+            $('#registrationForm').submit(function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                
+                // Clear existing error messages
+                $('.error').text('');
+    
+                // Collect form data
+                var formData = $(this).serialize();
+    
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function (response) {
+                        // Handle success (e.g., show success message, redirect)
+                        console.log('Success:', response);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors (e.g., display error messages)
+                        var errors = JSON.parse(xhr.responseText);
+                        console.log('Error:', errors);
+    
+                        // Display error messages next to respective fields
+                        displayErrors(errors);
+                    }
+                });
+            });
+    
+            function displayErrors(errors) {
+                $.each(errors, function (field, message) {
+                    $('#' + field).text(message).css('color', 'red');
+                });
+            }
+        });
+    </script>
+
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

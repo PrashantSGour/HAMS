@@ -1,0 +1,96 @@
+{% extends 'Sbase.html' %}
+{% load static %}
+
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <!-- Sidebar Button to Show/Hide Sidebar -->
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar">
+      <div id='side_content'>
+        <h2><b>Staff</b></h2>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url "Sdash" %}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "Sown" %}">
+              Own Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "SMRlist" %}">
+              Medical Records
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              Departments
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content" data-aos="fade-up" data-aos-delay="100">
+      <!-- Change below only -->
+      <div class="col-md-9">
+        <div class="row">
+          <div class="container mt-5">
+            <h1>All Appointments</h1>
+            <br>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>S.no</th>
+                    <th>Doctor Name</th>
+                    <th>Patient Name</th>
+                    <th>Issue</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Status</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for d in data1 %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ d.Demail.Dname }}</td>
+                    <td>{{ d.Ptname }}</td>
+                    <td>{{ d.issue}}</td>
+                    <td>{{ d.Adate }}</td>
+                    <td>{{ d.Atime }}</td>
+                    <td class="text-center">
+                      {% if d.Status %}
+                          {{ d.Status }}
+                      {% else %}
+                        Pending
+                      {% endif %}
+                  </td>
+                    
+                    {% comment %} <td><a href="{% url 'Appedit' d.Aid %}"class="btn btn-info">Edit</a><a href="{% url 'deleteItemA' d.Aid %}" class="btn btn-danger">Delete</a></td> {% endcomment %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content -->
+  </div>
+</div>
+
+
+{% endblock AdminContent %}
+

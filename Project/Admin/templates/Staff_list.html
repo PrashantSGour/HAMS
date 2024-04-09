@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar">
+        <div id='side_content'>
+          <h2><b>Admin</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url "admin_dashboard" %}">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RD" %}">
+                  Register Doctors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RS" %}">
+                  Register Staff
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RMR" %}">
+                  Register MR
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "MRlist" %}">
+                  Medical Records
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "Flist" %}">
+                  Feedback
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content" style='left-margin:50px' data-aos="fade-up" data-aos-delay="100">
+        <!-- Change below only -->
+        <div class="col-md-12">
+          <div class="row">
+            <div class="container mt-5">
+              <h1>Staff</h1>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Salary</th>
+                            <th>Email</th>
+                            <th>Date of Birth</th>
+                            <th>Job Profile</th>
+                            <th>Edit / Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in aSa %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ d.Sname }}</td>
+                            <td>{{ d.Sgender }}</td>
+                            <td>{{ d.Saddresss }}</td>
+                            <td>{{ d.Sphone }}</td>
+                            <td>{{ d.Ssalary }}</td>
+                            <td>{{ d.Semail }}</td>
+                            <td>{{ d.Sdob }}</td>
+                            <td>{{ d.Sjob }}</td>
+                            <td><a href="{% url 'Staffedit' d.Semail %}"class="btn btn-info">Edit</a><a href="{% url 'deleteItemS' d.Semail %}" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Main Content -->
+    </div>
+  </div>
+  
+  
+  
+  
+
+
+
+
+{% endblock AdminContent %}

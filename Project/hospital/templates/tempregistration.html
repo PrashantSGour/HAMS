@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Include Bootstrap 4 CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Include Bootstrap 4 JS and jQuery -->
+    <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "assets/css/Registration.css" %}">
+    <!-- <script src="assets/js/Registration.js"></script> -->
+
+    <!-- Other meta tags and head content go here -->
+</head>
+<body>
+<div class="container">
+    
+    <form class="form-horizontal" role="form" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <h2>Registration</h2>
+        {% if messages %}
+        <div class="alert alert-info">
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="Fname" class="col-sm-3 control-label">Full Name</label>
+            <div class="col-sm-9">
+                <input name="Fname" type="text" id="Fname" placeholder="Full Name" class="form-control" value="{{ request.POST.Fname }}"  autofocus>
+                <span class="error" id="nameError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address" class="col-sm-3 control-label">Addreess</label>
+            <div class="col-sm-9">
+                <input name="address" type="text" id="address" placeholder="Address" class="form-control" value="{{ request.POST.address }}"  autofocus>
+                <span class="error" id="addressError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">Email* </label>
+            <div class="col-sm-9">
+                <input name="email" value="{{ request.POST.email }}"  type="email" id="email" placeholder="Email" class="form-control" name="email">
+                <span class="error" id="emailError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-3 control-label">Password*</label>
+            <div class="col-sm-9">
+                <input name="password" type="password" id="password" placeholder="Password" class="form-control">
+                <span class="error" id="passwordError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword" class="col-sm-3 control-label">Confirm Password*</label>
+            <div class="col-sm-9">
+                <input name="cpassword" type="password" id="confirmPassword" placeholder="Confirm Password" class="form-control">
+                <span class="error" id="cpasswordError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
+            <div class="col-sm-9">
+                <input name="dob" value="{{ request.POST.dob }}"  type="date" id="birthDate" class="form-control">
+                <span class="error" id="dobError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-3 control-label">Phone number </label>
+            <div class="col-sm-9">
+                <input name="phone" value="{{ request.POST.phone }}"  type="tel" id="phone" placeholder="Phone number" class="form-control">
+                <span class="error" id="phoneError"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Gender</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" value="{{ request.POST.gender}}"  id="femaleRadio" value="Female" name="gender">F
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" id="maleRadio" value="{{ request.POST.gender }}"  value="Male" name="gender">M
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <span class="help-block">*Required fields</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9 col-sm-offset-3">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </div>
+    </form>
+    
+
+
+</div>
+<script src="{% static "assets/js/Registration.js" %}"></script>
+    {% comment %} <script>
+        function validateForm() {
+            var fullNameInput = document.getElementById("Fname");
+            var addressInput = document.getElementById("address");
+            var emailInput = document.getElementById("email");
+            var passwordInput = document.getElementById("password");
+            var confirmPasswordInput = document.getElementById("confirmPassword");
+            var dobInput = document.getElementById("birthDate");
+            var phoneInput = document.getElementById("phone");
+    
+            var fullNameError = document.getElementById("nameError");
+            var addressError = document.getElementById("addressError");
+            var emailError = document.getElementById("emailError");
+            var passwordError = document.getElementById("passwordError");
+            var confirmPasswordError = document.getElementById("cpasswordError");
+            var dobError = document.getElementById("dobError");
+            var phoneError = document.getElementById("phoneError");
+    
+            var nameRegex = /^[A-Za-z\s]+$/; // Allow only alphabets and spaces in Full Name
+            var mobileRegex = /^\d{10}$/; // Allow exactly 10 digits in the phone number
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // Check for a valid email format
+    
+            var valid = true;
+    
+            if (!fullNameInput.value.match(nameRegex)) {
+                fullNameError.innerHTML = "Full Name should only contain alphabets and spaces.";
+                valid = false;
+            } else {
+                fullNameError.innerHTML = "";
+            }
+    
+            if (!addressInput.value) {
+                addressError.innerHTML = "Address is required.";
+                valid = false;
+            } else {
+                addressError.innerHTML = "";
+            }
+    
+            if (!mobileInput.value.match(mobileRegex)) {
+                mobileError.innerHTML = "Mobile number should be 10 digits.";
+                valid = false;
+            } else {
+                mobileError.innerHTML = "";
+            }
+    
+            if (!emailInput.value.match(emailRegex)) {
+                emailError.innerHTML = "Email should be in a valid format.";
+                valid = false;
+            } else {
+                emailError.innerHTML = "";
+            }
+    
+            if (dobInput.value === "") {
+                dobError.innerHTML = "Date of Birth is required.";
+                valid = false;
+            } else {
+                var dobDate = new Date(dobInput.value);
+                var currentDate = new Date();
+                if (dobDate > currentDate) {
+                    dobError.innerHTML = "Date of Birth cannot be a future date.";
+                    valid = false;
+                } else {
+                    dobError.innerHTML = "";
+                }
+            }
+    
+            if (passwordInput.value === "") {
+                passwordError.innerHTML = "Password is required.";
+                valid = false;
+            } else {
+                passwordError.innerHTML = "";
+            }
+    
+            if (confirmPasswordInput.value === "") {
+                confirmPasswordError.innerHTML = "Confirm Password is required.";
+                valid = false;
+            } else {
+                confirmPasswordError.innerHTML = "";
+            }
+    
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                passwordError.innerHTML = "Passwords do not match.";
+                confirmPasswordError.innerHTML = "Passwords do not match.";
+                valid = false;
+            }
+    
+            if (!phoneInput.value) {
+                phoneError.innerHTML = "Phone number is required.";
+                valid = false;
+            } else {
+                phoneError.innerHTML = "";
+            }
+    
+            if (!valid) {
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
+     {% endcomment %}
+
+
+
+</body>
+</html>

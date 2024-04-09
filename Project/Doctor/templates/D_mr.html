@@ -1,0 +1,138 @@
+{% extends "Dbase.html" %}
+{% load static %}
+
+{% block DocContent %}
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar">
+        <div id='side_content'>
+          <h2><b>
+            Doctor</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url "dash" %}">
+                Your Appointments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "DMRS" %}">
+                Medical Records
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "RDMR" %}">
+                Add a new Medical Record
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "own" %}">
+                Your info
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content">
+
+    <div class="container p-md-5">
+      <div class="row justify-content-center">
+        
+        <div class="col-md-6">
+          
+          <form class="transparent-form" method='post' data-aos="fade-up" data-aos-delay="100">
+            {% csrf_token %}
+          {% if messages %}
+          <div class="alert alert-info">
+              <ul>
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+            <b><h2 class="text-center">Enter Medical Record</h2></b>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="pname">Patient Name:</label>
+                  <input name="pname" type="text" id="pname" placeholder="Full Name" class="form-control" value="{{ request.POST.pname }}" required autofocus>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class= "form-group">
+                  <label for="email">Patient Email:</label>
+                  <select id="email" name="email" required>
+                    <option value="">Select a patient</option>
+                    {% for P in Pat %}
+                    <option value="{{ P.Pemail }}">{{ P.Pemail }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="dep">Department:</label>
+                  <input name="dep" type="text" id="dep" placeholder="Department" class="form-control" value="{{ data.Dpid.Dpname }}" readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="dname">Doctor Name:</label>
+                  <input name="dname" type="text" id="dname" placeholder="Full Name" class="form-control" value="{{ data.Dname }}" readonly>
+                </div>
+              </div>
+              
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="date">Date of Record:</label>
+                  <input name="date"  type="date" id="date" class="form-control"autocomplete="on" required>
+                </div>
+              </div> 
+                    
+         
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="time">Time of Record:</label>
+                  <input name="time" type="time" id="time" placeholder="Time" class="form-control" autocomplete="on" required>
+                </div>
+              </div>    
+            </div>
+<br> 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="diagnosis">Diagnosis:</label>
+                      <input name="diagnosis" type="text" id="diagnosis" placeholder="Diagnosis" class="form-control" required>
+                    </div>
+                </div>    
+            </div>
+            
+            <div class="text-center"> <!-- Center the button -->
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+</div>
+</div>
+</div>
+
+
+{% endblock DocContent %}

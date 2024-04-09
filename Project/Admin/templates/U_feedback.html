@@ -1,0 +1,118 @@
+
+
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar"  style='bottom-margin:-50px'>
+        <div id='side_content'>
+          <h2><b>Admin</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url "admin_dashboard" %}">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RD" %}">
+                  Register Doctors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RS" %}">
+                  Register Staff
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RMR" %}">
+                  Register MR
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "MRlist" %}">
+                  Medical Records
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "Flist" %}">
+                  Feedback
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content">
+
+        <section id="appointment" class="appointment section-bg">
+          <div class="container" data-aos="fade-up">
+            <div class="section-title">
+            
+            
+            
+              <h2>Feedback</h2>
+              
+            </div>
+            
+            <form  method="post" role="form" class="transparent-form" data-aos="fade-up" data-aos-delay="100" action="{% url "Feedbackupdate" data.Fid  %}">
+              {% csrf_token %}
+              {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+              <div class="row">
+                
+                <div class="col-md-4 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" value="{{ data.Pemail.Pemail }}" read only autofocus>
+                </div>
+                
+              </div>
+             
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="dor">Recorded date:</label>
+                  <input name="dor" value="{{ data.fdatetime }}"  type="time" id="dor" class="form-control"readonly autofocus>
+                </div>
+              </div>
+        
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="feedback" rows="5" placeholder="feedback" value="">{{ data.feedback }}</textarea>
+              </div>
+              {% comment %} <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message"> Thank you!</div> {% endcomment %}
+              {% comment %} </div> {% endcomment %}
+              <br>
+              <div class="text-center"><button type="submit">SUBMIT</button></div>
+            </form>
+        
+          </div>
+        </section><!-- End Appointment Section -->
+        
+</div>        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+  
+
+
+
+
+{% endblock AdminContent %}

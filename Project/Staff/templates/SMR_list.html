@@ -1,0 +1,95 @@
+{% extends "Sbase.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar">
+        <div id='side_content'>
+          <h2><b>Staff</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url "Sdash" %}">
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "Sown" %}">
+                Own Details
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "SMRlist" %}">
+                Medical Records
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                Departments
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content" data-aos="fade-up" data-aos-delay="100">
+        <!-- Change below only -->
+        <div class="col-md-9">
+          <div class="row">
+            <div class="container mt-5">
+              <h1>Medical Records</h1>
+              <br>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                          <th>S.no.</th> 
+                        <th>Patient Name</th>
+                        <th>Patient Email</th>
+                        <th>Doctor Name</th>
+                        <th>Diagnosis</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Department</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for d in aMRa %}
+                      <tr>
+                          <td>{{ forloop.counter}}</td>  
+                        <td>{{ d.Patientname }}</td>
+                        <td>{{ d.Pemail.Pemail }}</td>
+                        <td>{{ d.Demail.Dname }}</td>
+                        <td>{{ d.Diagnosis}}</td>
+                        <td>{{ d.rdate}}</td>
+                        <td>{{ d.rtime }}</td>
+                        <td>{{ d.Demail.Dpid.Dpname }}</td>
+                        {% comment %} <td><a href="{% url 'MRedit' d.Mid %}"class="btn btn-info">Edit</a><a href="{% url 'deleteItemMR' d.Mid %}" class="btn btn-danger">Delete</a></td> {% endcomment %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Main Content -->
+    </div>
+  </div>
+  
+  
+  
+  
+
+
+
+
+{% endblock AdminContent %}

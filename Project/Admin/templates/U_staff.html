@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar"  style='bottom-margin:-50px'>
+        <div id='side_content'>
+          <h2><b>Admin</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url "admin_dashboard" %}">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RD" %}">
+                  Register Doctors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RS" %}">
+                  Register Staff
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "RMR" %}">
+                  Register MR
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "MRlist" %}">
+                  Medical Records
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "Flist" %}">
+                  Feedback
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content">
+
+    <div class="container p-md-5">
+      <div class="row justify-content-center">
+        
+        <div class="col-md-6">
+          
+            <form class="transparent-form" method='post' action="{% url "Staffupdate" data.Semail  %}" data-aos="fade-up" data-aos-delay="100">
+                {% csrf_token %}
+              {% if messages %}
+              <div class="alert alert-info">
+                  <ul>
+                      {% for message in messages %}
+                      <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
+              <b><h2 class="text-center">Edit - Staff</h2></b>
+            
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input name="Sname" type="text" id="Sname" placeholder="Full Name" class="form-control" value="{{ data.Sname }}" required autofocus>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input name="address" type="text" id="address" placeholder="Address" class="form-control" value="{{ data.Saddresss }}"  autofocus>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class= "form-group">
+                    <label for="email">Email:</label>
+                    <input name="email" value="{{ data.Semail }}"  type="email" id="email" placeholder="Email" class="form-control" name="email"required autofocus>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input name="dob" value="{{ formatted_date }}"  type="date" id="birthDate" class="form-control">
+                  </div>
+                </div>  
+                <div class="col-md-6">    
+                  <label for="dep">Department</label>
+                  <br>
+                  <select id="dep" name="dep">
+                      <option value="{{data.Dpid.Dpname}}">{{data.Dpid.Dpname}}</option>
+                      {% for department in Dep %}
+                      <option value="{{ department.Dpid }}">{{ department.Dpname }}</option>
+                      {% endfor %}
+                  </select> 
+                  </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input name="password"value="{{data.Spassword}}" type="password" id="password" placeholder="Password" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="cpassword">Confirm Password:</label>
+                    <input name="cpassword"value="{{data.Spassword}}" type="password" id="confirmPassword" placeholder="Confirm Password" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="phone">Phone:</label>
+                          <input name="phone" value="{{ data.Sphone }}"  type="tel" id="phone" placeholder="Phone number" class="form-control">
+                      </div>
+                  </div>
+  
+              
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="salary">Salary:</label>                    
+                          <input name="salary" value="{{ data.Ssalary }}"  type="number" id="salary" placeholder="Salary" class="form-control">
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="job">Job Profile</label>                    
+                          <input name="job" value="{{ data.Sjob }}"  type="text" id="job" placeholder="Job Profile" class="form-control">
+                      </div>
+                  </div>
+                  
+              </div>
+                      
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="form-check">
+                      <input type="radio" id="maleRadio"   value="Male" name="gender" {% if data.Sgender == 'Male' %}checked{% endif %}>
+                    <label class="form-check-label" for="male">Male</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio"   id="femaleRadio" value="Female" name="gender" {% if data.Sgender == 'Female' %}checked{% endif %}>
+                    <label class="form-check-label" for="female">Female</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio"   id="othersRadio" value="Others" name="gender" {% if data.Sgender == 'Others' %}checked{% endif %}>
+                    <label class="form-check-label" for="others">Others</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center"> <!-- Center the button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+{% endblock AdminContent %}

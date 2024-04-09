@@ -1,0 +1,168 @@
+
+
+
+
+{% extends 'Sbase.html' %}
+{% load static %}
+
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <!-- Sidebar Button to Show/Hide Sidebar -->
+    <div class="menu-btn" onclick="toggleSidebar()">☰
+    </div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar">
+      <div id='side_content'>
+        <h2><b>Staff</b></h2>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url "Sdash" %}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "Sown" %}">
+              Own Details
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "SMRlist" %}">
+              Medical Records
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              Departments
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content" data-aos="fade-up" data-aos-delay="100">
+        {% comment %} <div id="user-info-container"> {% endcomment %}
+          <form class="transparent-form" method='post' data-aos="fade-up" data-aos-delay="100" >
+            {% csrf_token %}
+            {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <b><h2 class="text-center">Your Info </h2></b>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="fullname">Full Name:</label>
+                  <input name="Sname" type="text" id="Sname" placeholder="Full Name" class="form-control" value="{{data.Sname}}" readonly>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="Saddresss">Address:</label>
+                  <input name="Saddress" type="text" id="Saddress" placeholder="Address" class="form-control" value="{{data.Saddresss}}" readonly>
+
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class= "form-group">
+                  <label for="Semail">Email:</label>
+                  <input name="Semail" value="{{ data.Semail }}"  type="email" id="Semail" placeholder="Email" class="form-control" name="email"readonly >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Sdob">Date of Birth:</label>
+                  <input name="Sdob" value="{{ formatted_date }}"  type="date" id="birthDate" class="form-control" readonly>
+                </div>
+              </div> 
+              <br>
+              <div class="col-md-6">    
+                <label for="Sdep">Department</label>
+                <input name="Sdep" type="text" id="Sdep" placeholder="Department" class="form-control" value={{data.Dpid.Dpname}} readonly> 
+                </div>      
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input name="password" type="text" id="password" placeholder="Password" class="form-control" value={{data.Spassword}} readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cpassword">Confirm Password:</label>
+                  <input name="cpassword" type="text" id="confirmPassword" placeholder="Confirm Password" value={{data.Spassword}}  class="form-control" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input name="phone" value="{{ data.Sphone}}"  type="tel" id="phone" placeholder="Phone number" class="form-control"readonly>
+                </div>
+                </div>
+
+            
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>                    
+                        <input name="salary" value="{{ data.Ssalary }}"  type="number" id="salary" placeholder="Salary" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="specs">Job description</label>                    
+                        <input name="specs" value="{{ data.Sjob }}"  type="text" id="specs" placeholder="Specialisation" class="form-control"readonly>
+                    </div>
+                </div>
+            </div>
+                    
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Gender:</label>
+                  <div class="form-check">
+                    <input type="radio" id="maleRadio"   value="Male" name="gender" {% if data.Sgender == 'Male' %}checked{% endif %} readonly>
+                    <label class="form-check-label" for="male" readonly>Male</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio"   id="femaleRadio" value="Female" name="gender" {% if data.Sgender == 'Female' %}checked{% endif %} readonly>
+                    <label class="form-check-label" for="female">Female</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="radio"   id="othersRadio" value="Others" name="gender" {% if data.Sgender == 'Others' %}checked{% endif %} readonly>
+                    <label class="form-check-label" for="others">Others</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center"> <!-- Center the button -->
+              <a href="{% url "Sownedit" data.Semail %}" type="submit" class="btn btn-primary">Change</a>
+            </div>
+          </form>
+        {% comment %} </div> {% endcomment %}
+    </div>
+    <!-- End Main Content -->
+  </div>
+</div>
+</div>
+    
+
+
+{% endblock AdminContent %}
+
+

@@ -1,0 +1,92 @@
+{% comment %} {% extends 'Dbase.html' %}
+{% load static %}
+
+
+{% block AdminContent %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <!-- Sidebar Button to Show/Hide Sidebar -->
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar">
+      <div id='side_content'>
+        <h2><b>DASHBOARD</b></h2>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url "dash" %}">
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "Pt" %}">
+              Patients
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "St" %}">
+              Staff
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "Dc" %}">
+              Other Doctors
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              Feedback
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content" style='left:50px' data-aos="fade-up" data-aos-delay="100">
+      <!-- Change below only -->
+      <div class="col-md-9">
+        <div class="row">
+          <div class="container mt-5">
+            <h1>Your Appointments</h1>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>S.no</th>
+                    <th>Patient Name</th>
+                    <th>Issue</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for d in A %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ d.Ptname }}</td>
+                    <td>{{ d.issue}}</td>
+                    <td>{{ d.Adate }}</td>
+                    <td>{{ d.Atime }}</td>
+                    <td>{{ d.Status }}</td>
+                    
+                    <td><a href="{% url 'Appedit' d.Aid %}"class="btn btn-info">Edit</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content -->
+  </div>
+</div>
+
+
+{% endblock AdminContent %} {% endcomment %}

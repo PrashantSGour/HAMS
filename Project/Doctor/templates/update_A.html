@@ -1,0 +1,138 @@
+
+
+
+
+{% extends 'Dbase.html' %}
+{% load static %}
+
+
+{% block DocContent %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <!-- Sidebar Button to Show/Hide Sidebar -->
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar">
+      <div id='side_content'>
+        <h2><b>Doctor</b></h2>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url "dash" %}">
+              Your Appointments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "DMRS" %}">
+              Medical Records
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "RDMR" %}">
+              Add a new Medical Record
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "own" %}">
+              Your info
+            </a>
+          </li>
+          
+        </ul>
+        </div>
+      </div>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content" style='left:50px' data-aos="fade-up" data-aos-delay="100">
+      <!-- Change below only -->
+      <div class="container p-md-5">
+        <div class="row justify-content-center">
+          
+          <div class="col-md-6">
+            
+              {% comment %} <form class="transparent-form" method='post' action="{% url "MRupdate" data.Mid  %}"> {% endcomment %}
+                  <form  method="post" role="form" class="transparent-form" data-aos="fade-up" data-aos-delay="100" action="{% url "OAU" data.Aid  %}">
+                      {% csrf_token %}
+                      {% if messages %}
+                    <div class="alert alert-info">
+                        <ul>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <b><h2 class="text-center">Edit - Appointment</h2></b>
+                      <div class="row">
+                        <div class="col-md-4 form-group">
+                          <input type="text" name="name" class="form-control" id="name" placeholder="Patient Name" value="{{ data.Ptname }}"readonly autofocus>
+                        </div>
+                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                          <input type="email" class="form-control" name="email" id="email" placeholder="Patient Email" value="{{ data.Pemail }}" readonly autofocus>
+                        </div>
+                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                          <input type="tel" class="form-control" name="phone" id="phone" placeholder="Patient Phone" value="{{data.Ptphone }}"readonly autofocus>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4 form-group mt-3">
+                          <label for="time">Date of Appointment:</label>
+                          <input type="date" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" value="{{formatted_date}}" required>
+                        </div>
+                        <div class="col-md-4 form-group mt-3">
+                        <label for="time">Time of Appointment:</label>
+                          <input name="time"  type="time" id="time" placeholder="Time" class="form-control" required
+                          {% if formatted_time %}
+                              value="{{ formatted_time }}"
+                          {% else %}
+                              placeholder="Select Time"
+                          {% endif %}>
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4 form-group mt-3">
+                              <label for="dep">Department</label>
+                              <input name="dep" value="{{ data.Demail.Dpid.Dpname }}" type="text" id="dep" placeholder="Department" class="form-control" readonly >
+                          </div>
+                          <div class="form-group mt-3">
+                              <label for="dep">Issue</label>
+                              <textarea class="form-control" name="issue"  rows="5" placeholder="Issue" readonly required autofocus>{{ data.issue }}</textarea>
+                          </div>
+  
+                      </div>
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label>Status:</label>
+                                <div class="form-check">
+                                  <input type="radio" id="confirmRadio"   value="Confirm" name="Status" {% if data.Status == 'Confirm' %}checked{% endif %}>
+                                  <label class="form-check-label" for="Confirm">Confirm</label>
+                                </div>
+                                <div class="form-check">
+                                  <input type="radio"   id="declineRadio" value="Decline" name="Status" {% if data.Status == 'Decline' %}checked{% endif %}>
+                                  <label class="form-check-label" for="Decline">Decline</label>
+                                </div>                             
+                              </div>
+                            </div>
+                      </div>
+                      {% comment %} <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div> {% endcomment %}
+                      {% comment %} </div> {% endcomment %}
+                      <div class="text-center"><button type="submit">Make Changes</button></div>
+                  </form>
+          </div>
+        </div>
+      </div>
+    
+  </div> 
+</div>
+</div>
+    <!-- End Main Content -->
+
+
+{% endblock DocContent %}
+
+

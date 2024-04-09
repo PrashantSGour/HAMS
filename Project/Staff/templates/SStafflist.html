@@ -1,0 +1,93 @@
+{% extends "Sbase.html" %}
+{% load static %}
+
+{% block AdminContent %}
+
+
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <!-- Sidebar Button to Show/Hide Sidebar -->
+      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  
+      <!-- Sidebar Content -->
+      <div class="sidebar">
+        <div id='side_content'>
+          <h2><b>Staff</b></h2>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url "Sdash" %}">
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "Sown" %}">
+                Own Details
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "SMRlist" %}">
+                Medical Records
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                Departments
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Main Content -->
+      <div class="main-content" id="main-content" style='left-margin:50px' data-aos="fade-up" data-aos-delay="100">
+        <!-- Change below only -->
+        <div class="col-md-12">
+          <div class="row">
+            <div class="container mt-5">
+              <h1>Other Staff</h1>
+              <br>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Job Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in aSa %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ d.Sname }}</td>
+                            <td>{{ d.Sgender }}</td>
+                            <td>{{ d.Saddresss }}</td>
+                            <td>{{ d.Sphone }}</td>
+                            <td>{{ d.Semail }}</td>
+                            <td>{{ d.Sjob }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Main Content -->
+    </div>
+  </div>
+  
+  
+  
+  
+
+
+
+
+{% endblock AdminContent %}

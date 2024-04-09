@@ -1,0 +1,175 @@
+
+
+
+
+{% extends 'Dbase.html' %}
+{% load static %}
+
+
+{% block DocContent %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <!-- Sidebar Button to Show/Hide Sidebar -->
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar">
+      <div id='side_content'>
+        <h2><b>Doctor</b></h2>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url "dash" %}">
+              Your Appointments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "DMRS" %}">
+              Medical Records
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "RDMR" %}">
+              Add a new Medical Record
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "own" %}">
+              Your info
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content" id="main-content" data-aos="fade-up" data-aos-delay="100">
+        <!-- <div class="navbar">
+            Dashboard
+        </div> -->
+        <div id="user-info-container">
+          <form class="transparent-form" method='post' data-aos="fade-up" data-aos-delay="100" >
+            {% csrf_token %}
+            {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <b><h2 class="text-center">Your Info </h2></b>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="fullname">Full Name:</label>
+                  <input name="Dname" type="text" id="Dname" placeholder="Full Name" class="form-control" value="{{data.Dname}}" readonly autofocus>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="address">Address:</label>
+                  <input name="address" type="text" id="address" placeholder="Address" class="form-control" value="{{ data.Daddress }}" readonly autofocus>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class= "form-group">
+                  <label for="email">Email:</label>
+                  <input name="email" value="{{ data.Demail }}"  type="email" id="email" placeholder="Email" class="form-control" name="email"readonly autofocus>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="dob">Date of Birth:</label>
+                  <input name="dob" value="{{ formatted_date }}"  type="date" id="birthDate" class="form-control" readonly>
+                </div>
+              </div> 
+              <br>
+              <div class="col-md-6">    
+                <label for="dep">Department</label>
+                <input name="dep" type="text" id="dep" placeholder="Department" class="form-control" value={{data.Dpid.Dpname}} readonly> 
+                </div>      
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input name="password" type="text" id="password" placeholder="Password" class="form-control" value={{data.Dpassword}} readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cpassword">Confirm Password:</label>
+                  <input name="cpassword" type="text" id="confirmPassword" placeholder="Confirm Password" value={{data.Dpassword}}  class="form-control" readonly>
+                </div>
+              </div>
+                <div class="col-md-4">
+                <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input name="phone" value="{{ data.Dphone}}"  type="tel" id="phone" placeholder="Phone number" class="form-control"readonly>
+                </div>
+                </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>                    
+                        <input name="salary" value="{{ data.Dsalary }}"  type="number" id="salary" placeholder="Salary" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="specs">Specialisation</label>                    
+                        <input name="specs" value="{{ data.Specialisation }}"  type="text" id="specs" placeholder="Specialisation" class="form-control"readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="qual">Qualification</label>
+                    <input name="qual" value="{{ data.Qualification }}"  type="text" id="qual" placeholder="Qualification" class="form-control"readonly>
+                  </div>
+                </div>
+            </div>
+                    
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Gender:</label>
+                      <div class="form-check">
+                          <input type="radio" id="maleRadio" value="Male" name="gender" {% if data.Dgender == 'Male' %}checked{% endif %} readonly>
+                          <label class="form-check-label" for="maleRadio">Male</label>
+                      </div>
+                      <div class="form-check">
+                          <input type="radio" id="femaleRadio" value="Female" name="gender" {% if data.Dgender == 'Female' %}checked{% endif %} readonly>
+                          <label class="form-check-label" for="femaleRadio">Female</label>
+                      </div>
+                      <div class="form-check">
+                          <input type="radio" id="othersRadio" value="Others" name="gender" {% if data.Dgender == 'Others' %}checked{% endif %} readonly>
+                          <label class="form-check-label" for="othersRadio">Others</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+            
+            <div class="text-center"> <!-- Center the button -->
+              <a href="{% url "ownedit" data.Demail %}" type="submit" class="btn btn-primary">Change</a>
+            </div>
+          </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <!-- End Main Content -->
+
+
+{% endblock DocContent %}
+
+
