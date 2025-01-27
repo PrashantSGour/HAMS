@@ -3,7 +3,6 @@ Our web based Healthcare Administration and Management System (HAMS) is designed
 
 <------Important------->
 
-Activate the virtual environment "hospitalenv" first, in order to run the project.
 
 1. Use PowerShell and open the hospitalenv folder in it.
 2. Type the following command without "" : "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Restricted".
@@ -14,5 +13,7 @@ For example:
 5. You will have to follow these steps every time you exit and reactivate venv.
 
 for anymore querries you can mail me at: gourprashant2002@gmail.com
+
+hello this is new change
 
 
